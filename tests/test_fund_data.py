@@ -8,36 +8,31 @@
         - Whether data is shown on a page
         - Whether data is stored in a database
         - Whether data is processed, calculated, or filtered
-
-    However, I have designed these classes to support those goals later.
-    Once these classes pass these sanity checks, we will move on to integration with:
-        - SQLite3 for storage
-        - Flask for web access
-        - Scraper module for data ingestion
 """
 
 from app.fund_data import Fund, NAVRecord, SubscriptionSummary
-from datetime import datetime #This is for transaction time
+from datetime import datetime
+
+def test_fund_object_structure():
+    f = Fund(fund_code="FND001", name="Global Equity Fund")
+    assert hasattr(f, "fund_code")
+    assert hasattr(f, "name")
+    assert isinstance(f.fund_code, str)
+    assert isinstance(f.name, str)
+
+def test_nav_record():
+    nav = NAVRecord(fund_code="FND001", date=datetime(2025, 5, 5), nav=13.24)
+    assert isinstance(nav.date, datetime), "Date must be a datetime object"
+    assert isinstance(nav.nav, float), "NAV must be a float"
+
+    def has_two_or_fewer_decimal_places(val: float) -> bool: ##Making sure NAV have at most 2 decimal places
+        return len(str(val).split(".")[-1]) <= 2
+
+    assert has_two_or_fewer_decimal_places(nav.nav), "NAV must have at most 2 decimal places"
 
 
-class Fund:
-    """Represents a mutual fund. Each fund is uniquely identified by its fund_code and name."""
-    def __init__(self, fund_code: str, name: str):
-        self.fund_code = fund_code
-        self.name = name
-
-
-class NAVRecord:
-    """Represents a Net Asset Value (NAV) record for a specific fund on a specific date."""
-    def __init__(self, fund_code: str, date: datetime, nav: float):
-        self.fund_code = fund_code
-        self.date = date
-        self.nav = nav
-
-
-class SubscriptionSummary:
-    """Represents a high-level summary of subscription/redemption flows for a fund. net_flow is a string like '+300M' or '-150M'."""
-    def __init__(self, fund_code: str, date: datetime, net_flow: str):
-        self.fund_code = fund_code
-        self.date = date
-        self.net_flow = net_flow
+def test_subscription_summary():
+    summary = SubscriptionSummary(fund_code="FND001", date=datetime(2025, 7, 1), net_flow="+300M")
+    assert isinstance(summary.fund_code, str)
+    assert isinstance(summary.date, datetime), "Date must be a datetime object"
+    assert isinstance(summary.net_flow, str), "Net flow must be a string"
