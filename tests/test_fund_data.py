@@ -1,4 +1,9 @@
-# test_fund_data.py
+
+"""PLEASE IGNORE THIS TEST FOR NOW. THIS TEST IS CURRENTLY UNDER CONSTRUCTION DUE TO CHANGES OF THE PROJECT.
+THIS IS THE 1st VERSION OF THE TEST"""
+
+
+
 """Purpose of this test:
     The goal here is to make sure our data object classes (Fund, NAVRecord, SubscriptionSummary)
     are well-formed and correctly initialized.
