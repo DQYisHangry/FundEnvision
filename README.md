@@ -1,33 +1,31 @@
 # FundEnvision
 
 
-### This project is a Python-based application that:
-- Scrapes publicly available fund data from financial websites.
-- Stores the scraped data in a SQLite database.
-- Allows processing and querying of the stored data (e.g., search by fund code, view historical NAV).
-- Provides a simple web interface (via Flask) to search and display fund details.
+## What This Project Does
 
-### What Data Is Collected?
+- Collects historical NAV data for a few selected ETFs using [yfinance](https://pypi.org/project/yfinance/).
+- Cleans and stores the data into a MySQL database (`funds_db`) with a single table `etf_nav`.
+- Provides a simple repository interface to query NAV data by ticker.
+- Includes basic Pytest tests to verify that the database integration works.
 
-| Scraped Data                                   | Example                  |
-| ---------------------------------------------- | ------------------------ |
-| Fund name                                      | "ABC Growth Fund"        |
-| Fund code                                      | "ABC123"                 |
-| Fund type/category                             | "Equity", "Bond", etc.   |
-| NAV (Net Asset Value)                          | 10.56 (USD)              |
-| Historical NAVs                                | Past 30 days             |
-| Subscription/Redemption summaries (aggregated) | "+500M inflow this week" |
+## What Data Is Collected?
 
-### Use cases
-Use Case 1: View Fund Summary
+| Field        | Example          |
+| ------------ | ---------------- |
+| Ticker       | SPY              |
+| Fund Name    | SPDR S&P 500 ETF |
+| Date         | 2024-08-01       |
+| NAV          | 512.23           |
 
-As a general user, I want to search for a fund by name or code and view:
-Its latest NAV/Fund type/category Aggregate subscription/redemption summaries
+Only data for a few ETFs (e.g., SPY, QQQ, VTI) is included for demonstration. Each ETF includes approximately one year of daily NAVs.
 
-Use Case 2: View Historical NAV
-As an analyst, I want to view a graph or table of NAV values over time for a fund to observe trends.
+## Use Cases
 
-Use Case 3: Update Fund Data
-As a data engineer, I want to trigger the scraper to re-collect data and store the updated NAV and summaries in the database.
+### Use Case 1: View Historical NAV
 
+As a user, I want to retrieve the NAV history of a given ETF ticker (e.g., `SPY`) so I can analyze its trends.
+
+### Use Case 2: Verify Data Is Stored Correctly
+
+As a developer, I want to run a test to confirm that data has been inserted into the database and can be retrieved via repository methods.
 
