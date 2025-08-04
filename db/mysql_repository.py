@@ -1,4 +1,7 @@
-# repository/mysql_repository.py
+#The class connects to a MySQL database and allows us to retrieve ETF NAV data
+#by fund ticker. It implements the Repository interface,
+#and is responsible for executing SQL queries and returning the results as EtfNav objects.
+
 from db.abstract_repository import Repository
 from db.etf_nav import EtfNav
 import mysql.connector
