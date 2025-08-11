@@ -14,9 +14,9 @@
 | Fund name                                      | "ABC Growth Fund"        |
 | Fund code                                      | "ABC123"                 |
 | Fund type/category                             | "Equity", "Bond", etc.   |
-| NAV (Net Asset Value)                          | 10.56 (USD)              |
+| NAV (Net Asset Value)                          | 10.56            |
 | Historical NAVs                                | Past 30 days             |
-| Subscription/Redemption summaries (aggregated) | "+500M inflow this week" |
+
 
 ### Use cases
 Use Case 1: View latest NAV for a ticker
