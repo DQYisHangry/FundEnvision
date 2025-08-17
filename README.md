@@ -65,7 +65,7 @@ Numbers: Decimal values are returned as JSON numbers
 Errors: JSON object with "error" and an appropriate HTTP status
 
 
-### 1) Get latest NAV — Use Case 1
+### 1) Get latest NAV for a specific ticker — Use Case 1
 
 `GET /api/v1/nav/{ticker}
 `
@@ -101,7 +101,7 @@ curl：
 `
 
 
-### 2）Get summary over a date range — Use Case 3
+### 2）Get NAV summary over a date range for a ticker — Use Case 3
 `GET /api/v1/nav/{ticker}/summary?start=YYYY-MM-DD&end=YYYY-MM-DD
 `
 
@@ -143,8 +143,4 @@ curl：
 404 Not Found — ticker or data not found
 
 500 Internal Server Error — unhandled error (see server logs)
-
-
-
-
 
