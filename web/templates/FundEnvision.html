@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NAV Demo – FundEnvision</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Arial; margin: 2rem; }
+    .card { max-width: 720px; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 2rem; }
+    .input-group { margin: 0.5rem 0; }
+    label { display: inline-block; min-width: 120px; font-weight: 600; }
+    input { padding: 0.4rem 0.6rem; border: 1px solid #ccc; border-radius: 6px; }
+    button { padding: 0.5rem 0.8rem; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; }
+    pre { background: #f8f8f8; padding: 0.8rem; border-radius: 8px; overflow: auto; }
+
+    .note {
+      margin: .75rem 0 1.5rem;
+      padding: .6rem .8rem;
+      background: #f0f7ff;
+      border: 1px solid #cfe2ff;
+      border-radius: 8px;
+      color: #0b5394;
+    }
+
+  </style>
+</head>
+<body>
+
+<h1>FundEnvision – NAV Demo</h1>
+
+<p class="note">
+  Data window: <strong>2024-08-02</strong> → <strong>2025-08-02</strong>.
+  Supported tickers: <strong>QQQ</strong>, <strong>SPY</strong>, <strong>VTI</strong>.
+</p>
+
+<div class="card">
+  <h2>Latest NAV</h2>
+  <form id="formLatest">
+    <div class="input-group">
+      <label for="tickerLatest">Ticker:</label>
+      <input id="tickerLatest" name="ticker" type="text" placeholder="e.g. QQQ" required />
+    </div>
+    <button type="submit" value="latest">Submit</button>
+  </form>
+
+  <h3>Response:</h3>
+  <pre id="latestResponse"></pre>
+</div>
+
+<div class="card">
+  <h2>Summary (date range)</h2>
+  <form id="formSummary">
+    <div class="input-group">
+      <label for="tickerSummary">Ticker:</label>
+      <input id="tickerSummary" name="ticker" type="text" placeholder="e.g. QQQ, SPY" required />
+    </div>
+    <div class="input-group">
+      <label for="start">Start date:</label>
+      <input id="start" name="start" type="date" required />
+    </div>
+    <div class="input-group">
+      <label for="end">End date:</label>
+      <input id="end" name="end" type="date" required />
+    </div>
+    <button type="submit" value="summary">Submit</button>
+  </form>
+
+  <h3>Response:</h3>
+  <pre id="summaryResponse"></pre>
+</div>
+
+<script>
+const BASE = 'http://127.0.0.1:5000';
+
+// --- Latest NAV ---
+async function handleLatest(event) {
+  event.preventDefault();
+  const data = new FormData(event.target);
+  const ticker = (data.get('ticker') || '').trim().toUpperCase();
+  const out = document.getElementById('latestResponse');
+  out.textContent = 'Loading...';
+
+  if (!ticker) {
+    out.textContent = 'Error: Ticker is required.';
+    return;
+  }
+
+  try {
+    const res = await fetch(`${BASE}/api/v1/nav/${encodeURIComponent(ticker)}`, {
+      method: 'GET'
+    });
+    const text = await res.text(); // show raw on error as well
+    try {
+      const json = JSON.parse(text);
+      out.textContent = JSON.stringify(json, null, 2);
+    } catch {
+      out.textContent = text;
+    }
+  } catch (err) {
+    out.textContent = 'Network error: ' + String(err);
+  }
+}
+document.getElementById('formLatest').addEventListener('submit', handleLatest, false);
+
+// --- Summary ---
+async function handleSummary(event) {
+  event.preventDefault();
+  const data = new FormData(event.target);
+  const ticker = (data.get('ticker') || '').trim().toUpperCase();
+  const start = (data.get('start') || '').trim();
+  const end   = (data.get('end') || '').trim();
+  const out = document.getElementById('summaryResponse');
+  out.textContent = 'Loading...';
+
+  if (!ticker || !start || !end) {
+    out.textContent = 'Error: ticker/start/end are required.';
+    return;
+  }
+
+  try {
+    const url = `${BASE}/api/v1/nav/${encodeURIComponent(ticker)}/summary?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`;
+    const res = await fetch(url, { method: 'GET' });
+    const text = await res.text();
+    try {
+      const json = JSON.parse(text);
+      out.textContent = JSON.stringify(json, null, 2);
+    } catch {
+      out.textContent = text;
+    }
+  } catch (err) {
+    out.textContent = 'Network error: ' + String(err);
+  }
+}
+document.getElementById('formSummary').addEventListener('submit', handleSummary, false);
+</script>
+
+</body>
+</html>
