@@ -1,7 +1,7 @@
 # FundEnvision
 
 
-### This project is a Python-based application that:
+## This project is a Python-based application that:
 Scrapes publicly available fund data from financial websites.
 
 Stores the scraped data in a relational database (MySQL by default; SQLite can be used for demos).
@@ -10,7 +10,7 @@ Allows processing and querying of the stored data (e.g., search by fund code, vi
 
 Provides a simple web interface / API (via Flask) to query and display fund details.
 
-### What Data Is Collected?
+## What Data Is Collected?
 
 | Scraped Data                                   | Example                  |
 | ---------------------------------------------- | ------------------------ |
@@ -21,7 +21,7 @@ Provides a simple web interface / API (via Flask) to query and display fund deta
 | Historical NAVs                                | Past 30 days             |
 
 
-### Use cases
+## Use cases
 Use Case 1: View latest NAV for a ticker
 As a user, I want to quickly get the most recent NAV data point for an ETF.
 
@@ -32,13 +32,13 @@ As an analyst, I want to view a graph or table of NAV values over time for a fun
 Use Case 3: Simple stats over a date range
 As a user, I want to get a tiny summary for a period (count of days, first/last NAV, absolute and % change).
 
-### Requirements
+## Requirements
 ‘python >= 3.10
 pip install -r requirements.txt
 # or minimal:
 pip install Flask mysql-connector-python’
 
-### Run the Flask API
+## Run the Flask API
 
 This Flask API exposes two endpoints implemented in web/api_min.py:
 
@@ -50,8 +50,8 @@ Range Summary (Use Case 3)
 python -m web.api_min
 #Server base URL:http://127.0.0.1:5000 ’
 
-### API Documentation
-## Conventions
+## API Documentation
+### Conventions
 
 Versioning: /api/v1/...
 
@@ -61,15 +61,15 @@ Numbers: Decimal values are returned as JSON numbers
 
 Errors: JSON object with "error" and an appropriate HTTP status
 
-## 1) Get latest NAV — Use Case 1
+### 1) Get latest NAV — Use Case 1
 
 ‘GET /api/v1/nav/{ticker}’
 
-# Path params
+### Path params
 
 ticker (string, required), e.g. QQQ
 
-# Responses
+### Responses
 
 200 OK
 
@@ -89,15 +89,15 @@ curl
 curl -i http://127.0.0.1:5000/api/v1/nav/NOPE’
 
 
-## 2）Get summary over a date range — Use Case 3
+### 2）Get summary over a date range — Use Case 3
 ‘GET /api/v1/nav/{ticker}/summary?start=YYYY-MM-DD&end=YYYY-MM-DD’
 
-# Query params
+### Query params
 ‘start’ (date, required)
 
 ’end‘ (date, required; must be ≥ start)
 
-# Responses
+### Responses
 200 OK
 ‘’‘{
   "count": 6,
@@ -113,7 +113,7 @@ curl -i http://127.0.0.1:5000/api/v1/nav/NOPE’
 curl
 ‘curl -i "http://127.0.0.1:5000/api/v1/nav/QQQ/summary?start=2025-07-29&end=2025-08-07"’
 
-# Common HTTP Status Codes
+## Common HTTP Status Codes
 
 200 OK — successful response
 
