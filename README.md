@@ -29,14 +29,15 @@ As a user, I want to quickly get the most recent NAV data point for an ETF.
 Use Case 2: View Historical NAV
 As an analyst, I want to view a graph or table of NAV values over time for a fund to observe trends.
 
+
 Use Case 3: Simple stats over a date range
 As a user, I want to get a tiny summary for a period (count of days, first/last NAV, absolute and % change).
 
+
 ## Requirements
-‘python >= 3.10
+```python >= 3.10
 pip install -r requirements.txt
-# or minimal:
-pip install Flask mysql-connector-python’
+pip install Flask mysql-connector-python```
 
 ## Run the Flask API
 
@@ -46,9 +47,9 @@ Latest NAV (Use Case 1)
 
 Range Summary (Use Case 3)
 
-‘#ensure web/ is a package (has __init__.py)
+```#ensure web/ is a package (has __init__.py)
 python -m web.api_min
-#Server base URL:http://127.0.0.1:5000 ’
+#Server base URL:http://127.0.0.1:5000 ```
 
 ## API Documentation
 ### Conventions
@@ -63,7 +64,7 @@ Errors: JSON object with "error" and an appropriate HTTP status
 
 ### 1) Get latest NAV — Use Case 1
 
-‘GET /api/v1/nav/{ticker}’
+```GET /api/v1/nav/{ticker}```
 
 ### Path params
 
@@ -73,45 +74,45 @@ ticker (string, required), e.g. QQQ
 
 200 OK
 
-‘’‘{
+```{
   "ticker": "QQQ",
   "nav_date": "2025-08-01",
   "nav": 553.88,
   "fund_name": "Invesco QQQ Trust",
   "source": null
-}’‘’
+}```
 
 400 Bad Request
-‘{"error": "not found"}’
+```{"error": "not found"}```
 
 curl
-‘curl -i http://127.0.0.1:5000/api/v1/nav/QQQ
-curl -i http://127.0.0.1:5000/api/v1/nav/NOPE’
+```curl -i http://127.0.0.1:5000/api/v1/nav/QQQ
+curl -i http://127.0.0.1:5000/api/v1/nav/NOPE```
 
 
 ### 2）Get summary over a date range — Use Case 3
-‘GET /api/v1/nav/{ticker}/summary?start=YYYY-MM-DD&end=YYYY-MM-DD’
+```GET /api/v1/nav/{ticker}/summary?start=YYYY-MM-DD&end=YYYY-MM-DD```
 
 ### Query params
-‘start’ (date, required)
+```start (date, required)
 
-’end‘ (date, required; must be ≥ start)
+end (date, required; must be ≥ start)```
 
 ### Responses
 200 OK
-‘’‘{
+```{
   "count": 6,
   "first": 550.10,
   "last": 553.88,
   "abs_change": 3.78,
   "pct_change": 0.00686
 }
-’‘’
+```
 400 Bad Request
-‘{"error": "invalid date range"}’
+```{"error": "invalid date range"}```
 
 curl
-‘curl -i "http://127.0.0.1:5000/api/v1/nav/QQQ/summary?start=2025-07-29&end=2025-08-07"’
+```curl -i "http://127.0.0.1:5000/api/v1/nav/QQQ/summary?start=2025-07-29&end=2025-08-07"```
 
 ## Common HTTP Status Codes
 
