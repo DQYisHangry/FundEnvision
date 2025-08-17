@@ -133,14 +133,3 @@ curl：
 
 `curl -i "http://127.0.0.1:5000/api/v1/nav/QQQ/summary?start=2025-07-29&end=2025-08-07"
 `
-
-## Common HTTP Status Codes
-
-200 OK — successful response
-
-400 Bad Request — invalid/missing parameters (e.g., bad date range)
-
-404 Not Found — ticker or data not found
-
-500 Internal Server Error — unhandled error (see server logs)
-
