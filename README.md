@@ -4,7 +4,7 @@
 ## This project is a Python-based application that:
 Scrapes publicly available fund data from financial websites.
 
-Stores the scraped data in a relational database (MySQL by default; SQLite can be used for demos).
+Stores the scraped data in a relational database (MySQL by default).
 
 Allows processing and querying of the stored data (e.g., search by fund code, view historical NAV).
 
@@ -15,8 +15,7 @@ Provides a simple web interface / API (via Flask) to query and display fund deta
 | Scraped Data                                   | Example                  |
 | ---------------------------------------------- | ------------------------ |
 | Fund name                                      | "ABC Growth Fund"        |
-| Fund code                                      | "ABC123"                 |
-| Fund type/category                             | "Equity", "Bond", etc.   |
+| Fund code                                      | "ABC"                 |
 | NAV (Net Asset Value)                          | 10.56            |
 | Historical NAVs                                | Past 30 days             |
 
@@ -50,7 +49,7 @@ Range Summary (Use Case 3)
 
 ```#ensure web/ is a package (has __init__.py)
 python -m web.api_min
-#Server base URL:http://127.0.0.1:5000
+#Server base URL:[http://127.0.0.1:5000] (http://127.0.0.1:5000/FundEnvision)
 ```
 
 ## API Documentation
@@ -62,7 +61,11 @@ Dates: ISO YYYY-MM-DD
 
 Numbers: Decimal values are returned as JSON numbers
 
-Errors: JSON object with "error" and an appropriate HTTP status
+Errors: JSON object with "error" and a HTTP status
+
+Demo data window: 2024-08-02 → 2025-08-02
+
+Supported tickers (demo): QQQ, SPY, VTI
 
 
 ### 1) Get latest NAV for a specific ticker — Use Case 1
@@ -77,7 +80,7 @@ Errors: JSON object with "error" and an appropriate HTTP status
 
 ### Responses
 
-200 - OK
+200 - Valid Request:
 
 ```
 {"ticker": "QQQ",
@@ -112,7 +115,7 @@ end (date, required; must be ≥ start)
 ```
 
 ### Responses
-200 OK
+200 - Valid Request:
 
 ```
 {"count": 6,
@@ -122,12 +125,16 @@ end (date, required; must be ≥ start)
   "pct_change": 0.00686
 }
 ```
+If no data for that range/ticker, the API returns a valid summary with zeros/nullable fields—still 200.)
 
 
-400 - Bad Request：
+
+400 - Bad Request：(Invalid or missing dates, or start > end)
 
 `{ "error": "invalid date range" }
 `
+
+
 
 curl：
 
