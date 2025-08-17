@@ -1,3 +1,4 @@
 class Repository:
     def fetch_navs(self, ticker, start=None, end=None): ...
     def list_nav_by_ticker(self, ticker):
+        return self.fetch_navs(ticker)
