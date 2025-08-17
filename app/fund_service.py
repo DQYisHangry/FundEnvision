@@ -47,7 +47,7 @@ class FundService:
         abs_change = last - first
 
         #Compute percentage change; avoid division by zero
-        if first == 0:
+        if first == Decimal("0"):
             pct_change = None
         else:
             pct_change = abs_change / first

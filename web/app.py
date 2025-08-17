@@ -9,14 +9,14 @@ service = FundService(MysqlRepository())
 from datetime import date
 
 
-def parse_date(s: str | None) -> date | None:
+def parse_date(s):
     if not s:
         return None
-    return date.fromisoformat(s)
+    try:
+        return date.fromisoformat(s.strip())
+    except ValueError:
+        return None
 
-def to_float(v):
-    from decimal import Decimal
-    return float(v) if isinstance(v, Decimal) else v
 
 app = Flask(__name__)
 
@@ -41,15 +41,11 @@ def latest_nav(ticker: str):
         "nav_date": nav.nav_date.isoformat(),
         "nav": to_float(nav.nav),
         "fund_name": getattr(nav, "fund_name", None),
-        "source": getattr(nav, "source", None),
     }), 200
 
 
 @app.get("/api/v1/nav/<ticker>/summary")
 def summary_nav(ticker: str):
-    from datetime import date
-    def parse_date(s):
-        return date.fromisoformat(s) if s else None
     start = parse_date(request.args.get("start"))
     end   = parse_date(request.args.get("end"))
     if not (start and end) or start > end:
