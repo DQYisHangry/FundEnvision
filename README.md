@@ -37,7 +37,8 @@ As a user, I want to get a tiny summary for a period (count of days, first/last 
 ## Requirements
 ```python >= 3.10
 pip install -r requirements.txt
-pip install Flask mysql-connector-python```
+pip install Flask mysql-connector-python
+```
 
 ## Run the Flask API
 
@@ -49,7 +50,8 @@ Range Summary (Use Case 3)
 
 ```#ensure web/ is a package (has __init__.py)
 python -m web.api_min
-#Server base URL:http://127.0.0.1:5000 ```
+#Server base URL:http://127.0.0.1:5000
+```
 
 ## API Documentation
 ### Conventions
@@ -62,41 +64,52 @@ Numbers: Decimal values are returned as JSON numbers
 
 Errors: JSON object with "error" and an appropriate HTTP status
 
+
 ### 1) Get latest NAV — Use Case 1
 
-```GET /api/v1/nav/{ticker}```
+`GET /api/v1/nav/{ticker}
+`
 
 ### Path params
 
-ticker (string, required), e.g. QQQ
+`ticker (string, required), e.g. QQQ
+`
 
 ### Responses
 
-200 OK
+200 - OK
 
-```{
-  "ticker": "QQQ",
+```
+{"ticker": "QQQ",
   "nav_date": "2025-08-01",
   "nav": 553.88,
   "fund_name": "Invesco QQQ Trust",
-  "source": null
-}```
+  "source": null}
 
-400 Bad Request
-```{"error": "not found"}```
+```
 
-curl
-```curl -i http://127.0.0.1:5000/api/v1/nav/QQQ
-curl -i http://127.0.0.1:5000/api/v1/nav/NOPE```
+400 - Bad Request：
+
+`{"error": "not found"}
+`
+
+curl：
+
+`curl -i http://127.0.0.1:5000/api/v1/nav/QQQ
+`
+`curl -i http://127.0.0.1:5000/api/v1/nav/NOPE
+`
 
 
 ### 2）Get summary over a date range — Use Case 3
-```GET /api/v1/nav/{ticker}/summary?start=YYYY-MM-DD&end=YYYY-MM-DD```
+`GET /api/v1/nav/{ticker}/summary?start=YYYY-MM-DD&end=YYYY-MM-DD
+`
 
 ### Query params
 ```start (date, required)
 
-end (date, required; must be ≥ start)```
+end (date, required; must be ≥ start)
+```
 
 ### Responses
 200 OK
@@ -108,11 +121,14 @@ end (date, required; must be ≥ start)```
   "pct_change": 0.00686
 }
 ```
+
 400 Bad Request
-```{"error": "invalid date range"}```
+```{"error": "invalid date range"}
+```
 
 curl
-```curl -i "http://127.0.0.1:5000/api/v1/nav/QQQ/summary?start=2025-07-29&end=2025-08-07"```
+```curl -i "http://127.0.0.1:5000/api/v1/nav/QQQ/summary?start=2025-07-29&end=2025-08-07"
+```
 
 ## Common HTTP Status Codes
 
