@@ -55,8 +55,8 @@ def summary_nav(ticker: str):
     if not (start and end) or start > end:
         return jsonify({"error": "invalid date range"}), 400
     out = service.get_nav_summary(ticker.upper(), start, end)
-    from decimal import Decimal
-    out = {k: (float(v) if isinstance(v, Decimal) else v) for k, v in out.items()}
+    for k in list(out.keys()):
+        out[k] = to_float(out[k])
     return jsonify(out), 200
 
 if __name__ == "__main__":
