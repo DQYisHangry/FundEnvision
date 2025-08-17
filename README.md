@@ -113,8 +113,9 @@ end (date, required; must be ≥ start)
 
 ### Responses
 200 OK
-```{
-  "count": 6,
+
+```
+{"count": 6,
   "first": 550.10,
   "last": 553.88,
   "abs_change": 3.78,
@@ -122,13 +123,16 @@ end (date, required; must be ≥ start)
 }
 ```
 
-400 Bad Request
-```{"error": "invalid date range"}
-```
 
-curl
-```curl -i "http://127.0.0.1:5000/api/v1/nav/QQQ/summary?start=2025-07-29&end=2025-08-07"
-```
+400 - Bad Request：
+
+`{ "error": "invalid date range" }
+`
+
+curl：
+
+`curl -i "http://127.0.0.1:5000/api/v1/nav/QQQ/summary?start=2025-07-29&end=2025-08-07"
+`
 
 ## Common HTTP Status Codes
 
