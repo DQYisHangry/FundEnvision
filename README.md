@@ -35,8 +35,6 @@ As a user, I want to get a tiny summary for a period (count of days, first/last 
 
 ## Requirements
 ```python >= 3.10
-pip install -r requirements.txt
-pip install Flask mysql-connector-python
 ```
 
 ## Run the Flask API
