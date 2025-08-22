@@ -48,7 +48,7 @@ Latest NAV (Use Case 1)
 Range Summary (Use Case 3)
 
 ```#ensure web/ is a package (has __init__.py)
-python -m web.api_min
+python -m web.app
 #Server base URL:[http://127.0.0.1:5000] (http://127.0.0.1:5000/FundEnvision)
 ```
 
@@ -122,7 +122,6 @@ end (date, required; must be ≥ start)
   "first": 550.10,
   "last": 553.88,
   "abs_change": 3.78,
-  "pct_change": 0.00686
 }
 ```
 If no data for that range/ticker, the API returns a valid summary with zeros/nullable fields—still 200.)

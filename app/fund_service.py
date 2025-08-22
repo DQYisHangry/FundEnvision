@@ -32,7 +32,6 @@ class FundService:
             "first": None,
             "last": None,
             "abs_change": None,
-            "pct_change": None
         }
 
         #If the series is empty, just return the default result
@@ -46,17 +45,11 @@ class FundService:
         #Compute absolute change (last minus first)
         abs_change = last - first
 
-        #Compute percentage change; avoid division by zero
-        if first == Decimal("0"):
-            pct_change = None
-        else:
-            pct_change = abs_change / first
 
         #Fill in the dictionary with simple stats
         result["count"] = len(series)
         result["first"] = first
         result["last"] = last
         result["abs_change"] = abs_change
-        result["pct_change"] = pct_change
 
         return result

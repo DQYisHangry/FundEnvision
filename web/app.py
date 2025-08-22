@@ -6,8 +6,10 @@ from app.fund_service import FundService
 from db.mysql_repository import MysqlRepository
 
 service = FundService(MysqlRepository())
-from datetime import date
 
+
+def to_float(v):
+    return float(v) if isinstance(v, Decimal) else v
 
 def parse_date(s):
     if not s:
@@ -33,9 +35,8 @@ def latest_nav(ticker: str):
     nav = service.get_latest_nav(ticker.upper())
     if not nav:
         return jsonify({"error": "not found"}), 404
-    def to_float(v):
-        from decimal import Decimal
-        return float(v) if isinstance(v, Decimal) else v
+
+
     return jsonify({
         "ticker": nav.ticker,
         "nav_date": nav.nav_date.isoformat(),

@@ -40,4 +40,3 @@ def test_get_nav_summary():
     assert summary["first"] == Decimal("502.10")
     assert summary["last"] == Decimal("501.50")
     assert summary["abs_change"] == Decimal("501.50") - Decimal("502.10")
-    assert summary["pct_change"] < Decimal("0")
